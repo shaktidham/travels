@@ -1,0 +1,18 @@
+body {
+  background-color: #f8f9fa;
+}
+.login-container {
+  max-width: 400px;
+  margin-top: 100px;
+}
+.login-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.login-card .form-control {
+  border-radius: 1rem;
+}
+.login-card .btn {
+  border-radius: 1rem;
+}

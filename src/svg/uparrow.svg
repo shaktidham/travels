@@ -1,0 +1,8 @@
+<svg
+                              className="text-white"
+                              width="16"
+                              height="8"
+                              viewBox="0 0 16 8"
+                            >
+                              <path d="M0 8L8 0L16 8H0Z" fill="black" />
+                            </svg>

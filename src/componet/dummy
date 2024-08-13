@@ -1,0 +1,251 @@
+const handleDownload = () => { // Create a new div element const element =
+document.createElement("div"); element.innerHTML = `
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Seating Plan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="font-sans">
+    <div class="container mx-auto max-w-4xl p-4">
+      <div class="flex justify-between">
+        <div class="w-1/2 pr-2">
+          <table class="min-w-full border-collapse border border-black mb-4">
+            <thead>
+              <tr>
+                <th class="border border-black bg-red-500 text-white p-2">
+                  નીચે
+                </th>
+                <th class="border border-black bg-red-500 text-white p-2">
+                  ઉપર
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">A</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">B</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">C</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">D</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">E</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">F</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">G</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">H</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">I</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">J</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">K</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">L</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="w-1/2 pl-2">
+          <table class="min-w-full border-collapse border border-black mb-4">
+            <thead>
+              <tr>
+                <th class="border border-black bg-red-500 text-white p-2">
+                  નીચે
+                </th>
+                <th class="border border-black bg-red-500 text-white p-2">
+                  ઉપર
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">1.2</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">3.4</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">5.6</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">7.8</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">9.10</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">11.12</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">13.14</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">15.16</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">17.18</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">19.20</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">21.22</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+                <td class="border border-black p-2 text-center">
+                  <div class="font-extrabold text-xl">23.24</div>
+                  <div>{item.name}</div>
+                  <div>{item.village}</div>
+                  <div>{item.mobile}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <table class="w-full">
+        <tbody>
+          <tr>
+            <td class="border border-black p-2 text-center w-1/6">1</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+          <tr>
+            <td class="border border-black p-2 text-center">2</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+
+          <tr>
+            <td class="border border-black p-2 text-center">3</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+          <tr>
+            <td class="border border-black p-2 text-center">4</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+          <tr>
+            <td class="border border-black p-2 text-center">5</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+          <tr>
+            <td class="border border-black p-2 text-center">6</td>
+            <td class="border border-black p-2 text-center"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+`; // Convert the HTML content to PDF html2pdf() .from(element) .toPdf()
+.get("pdf") .then(function (pdf) { pdf.save("shaktidham.pdf"); }); };
