@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bus from "./../img/image 4.png";
-import { ReactComponent as Vector } from "../svg/Vector.svg";
+import { ReactComponent as Vector } from "./../svg/Vector.svg";
 import { setDate } from "../Slice/redux";
 import { useDispatch } from "react-redux";
 
