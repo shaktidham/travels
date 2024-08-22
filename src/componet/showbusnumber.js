@@ -53,10 +53,10 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
     };
 
     try {
-      const hasId = busdetails.data[0]?._id;
+      const hasId = busdetails?.data[0]?._id;
 
       const endpoint = hasId
-        ? `https://shaktidham-backend.vercel.app/bus/update/${busdetails.data[0]._id}`
+        ? `https://shaktidham-backend.vercel.app/bus/update/${busdetails?.data[0]._id}`
         : `https://shaktidham-backend.vercel.app/bus/create/${routeId}`;
       const method = hasId ? "PUT" : "POST";
 
@@ -118,7 +118,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 htmlFor="busNumber"
                 className="text-left text-gray-700 font-bold block"
               >
-                Bus Number:
+                બસ નંબર:
               </label>
               <input
                 type="text"
@@ -150,7 +150,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 htmlFor="location"
                 className="text-left text-gray-700 font-bold block mt-4"
               >
-                Location:
+                લોકેશન:
               </label>
               <input
                 type="text"
@@ -166,7 +166,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 htmlFor="location"
                 className="text-left text-gray-700 font-bold block mt-4"
               >
-                Driver:
+                ડ્રાઈવર:
               </label>
               <input
                 type="text"
@@ -182,7 +182,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 htmlFor="date"
                 className="text-left text-gray-700 font-bold block mt-4"
               >
-                Date:
+                તારીખ:
               </label>
               <input
                 type="text"
@@ -199,7 +199,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                   type="submit"
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
                 >
-                  {busdetails.data[0]?._id ? "Update" : "Submit"}
+                  {/* {busdetails?.data[0]?._id ? "Update" : "Submit"} */}ssd
                 </button>
               </div>
               {error && <div className="text-red-500 mt-2">{error}</div>}
@@ -209,15 +209,15 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
               <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                 <tbody>
                   <tr className="border-b hover:bg-gray-50">
-                    <td className="p-4">Bus Number</td>
+                    <td className="p-4">બસ નંબર</td>
                     <td className="p-4">
                       {busdetails?.data?.[0]?.busNumber || ""}
                     </td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50">
-                    <td className="p-4">Price</td>
+                    <td className="p-4"> ડ્રાઈવર</td>
                     <td className="p-4">
-                      {busdetails?.data?.[0]?.price || ""}
+                      {busdetails?.data?.[0]?.driver || ""}
                     </td>
                   </tr>
                 </tbody>

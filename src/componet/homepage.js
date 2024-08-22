@@ -130,8 +130,8 @@ const Homepage = () => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        const busdetails = await busnumber.json();
-
+        const busdetailas = await busnumber.json();
+        console.log(busdetailas, "busdetailsaaa");
         setSortdata(result);
         setBusDetails(busdetails);
       } catch (error) {
@@ -187,7 +187,6 @@ const Homepage = () => {
       ["કેબિન-3"],
       ["કેબિન-4"],
       ["કેબિન-5"],
-      ["કેબિન-6"],
     ];
 
     // Function to generate table rows from labels or numbers
@@ -201,28 +200,31 @@ const Homepage = () => {
           return `
             <tr>
               ${pair
-              .map((seatNumber, index) => {
-                const item = items[index];
-                return `
-                    <td class="border border-black p-2 text-center h-28 w-28  ">
-                      ${item
-                    ? `
-                        <div class="font-bold text-lg">${item.seatNumber}</div>
-                        <div>${item.vilage || ""}</div>
-                        <div>${item.name || ""}</div>
-                        <div>${item.mobile || ""}</div>
+                .map((seatNumber, index) => {
+                  const item = items[index];
+                  return `
+                    <td class="border border-black text-center" style="height: 120px; width: 112px;">
+                      ${
+                        item
+                          ? `
+                        <div class="font-bold text-lg text-red-500">${
+                          item.seatNumber
+                        }</div>
+                        <div class="font-bold ">${item.vilage || ""}</div>
+                        <div class="font-bold ">${item.name || ""}</div>
+                        <div class="font-bold ">${item.mobile || ""}</div>
                       `
-                    : `
-                        <div class="font-bold text-lg">${seatNumber}</div>
+                          : `
+                        <div class="font-bold text-lg text-red-500">${seatNumber}</div>
                         <div></div>
                         <div></div>
                         <div></div>
                       `
-                  }
+                      }
                     </td>
                   `;
-              })
-              .join("")}
+                })
+                .join("")}
             </tr>
           `;
         })
@@ -238,17 +240,17 @@ const Homepage = () => {
           return `
             <tr>
               ${pair
-              .map((seatNumber, index) => {
-                const item = items[index];
-                return item
-                  ? `
-                      <td class="border border-black p-2 text-center w-1/6">${item.seatNumber}</td>
-                      <td class="border border-black p-2 text-left ">${item.name} -- ${item.vilage}</td>`
-                  : `
-                      <td class="border border-black p-2 text-center w-1/6">${seatNumber}</td>
+                .map((seatNumber, index) => {
+                  const item = items[index];
+                  return item
+                    ? `
+                      <td class="border border-black p-2 text-center w-1/6 ">${item.seatNumber}</td>
+                      <td class="border border-black p-2 text-left font-bold ">${item.vilage}--${item.name}  </td>`
+                    : `
+                      <td class="border border-black p-2 text-center w-1/6 ">${seatNumber}</td>
                       <td class="border border-black p-2 text-center "></td>`;
-              })
-              .join("")}
+                })
+                .join("")}
             </tr>
           `;
         })
@@ -272,19 +274,21 @@ const Homepage = () => {
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
       </head>
       <body class="font-sans m-0 p-0">
-        <div class="container mx-auto max-w-4xl p-4">
-      <table class="min-w-full     mb-3">
-      <thead>
-        <tr class=" ">
-          <th class=" text-right pr-2  ">તારીખ:-</th>
-          <th class=" text-left">${formattedDate}</th>
-          <th class=" text-right pr-2 ">ડ્રાઇવર:-</th>
-          <th class=" py-3 text-left  "> ${busdetails?.data[0]?.driver}</th>
-          <th class=" text-right pr-2 ">બસ નંબર:-</th>
-          <th class=" py-3 text-left  "> ${busdetails?.data[0]?.busNumber}</th>
-        </tr>
-      </thead>
-      </table>
+        <div class="container mx-auto max-w-4xl px-4">
+        <div class="text-3xl text-red-500 flex justify-center font-extrabold mb-5">શક્તિધામ ટ્રાવેલ્સ</div>
+    <table class="min-w-full mb-3">
+  <thead>
+    <tr class="flex justify-between">
+      <th class="text-right pr-2">તારીખ:- ${formattedDate}</th>
+      <th class="text-right pr-2">ડ્રાઇવર:-${busdetails?.data[0]?.driver}</th>
+    </tr>
+    <tr class="flex justify-between">
+      <th class="text-right pr-2">ઉપડવાનો સમય:-${busdetails?.data[0]?.bustime}</th>
+      <th class="text-right pr-2">બસ નંબર:-${busdetails?.data[0]?.busNumber}</th>
+    </tr>
+  </thead>
+</table>
+
           <div class="flex justify-between mb-4">
             <div class="w-1/2 pr-2">
              
@@ -333,7 +337,9 @@ const Homepage = () => {
       .then((pdf) => {
         pdf.autoPrint(); // Optional: automatically open the print dialog
         pdf.save(
-          `${formatDateForDisplay(inputs.Tablemanuplation.date)}shaktidham.pdf`
+          `${formatDateForDisplay(
+            inputs.Tablemanuplation.date
+          )}શક્તિધામ ટ્રાવેલ્સ.pdf`
         ); // Save the PDF
       });
   };
@@ -399,8 +405,9 @@ const Homepage = () => {
   return (
     <div>
       <div
-        className={`flex flex-col lg:flex-row items-center justify-between ${!isDateSelected ? "h-screen" : ""
-          }`}
+        className={`flex flex-col lg:flex-row items-center justify-between ${
+          !isDateSelected ? "h-screen" : ""
+        }`}
       >
         {/* Conditionally render image based on date selection */}
         {!isDateSelected && (
@@ -418,7 +425,10 @@ const Homepage = () => {
             </Link>
 
             {/* DatePicker */}
-            <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="en-gb">
+            <LocalizationProvider
+              dateAdapter={AdapterLuxon}
+              adapterLocale="en-gb"
+            >
               <DatePicker
                 value={inputs.Tablemanuplation.date}
                 onChange={(date) => handleDateChange(date)}
@@ -442,8 +452,6 @@ const Homepage = () => {
             </LocalizationProvider>
           </div>
         </div>
-
-
 
         {/* Conditionally render vector based on date selection */}
         {!isDateSelected && (
@@ -494,10 +502,16 @@ const Homepage = () => {
                     );
                     return (
                       <tr key={i} className="hover:bg-gray-50">
-                        <td className="text-center py-5 border">{currentLabel}</td>
-                        <td className="p-2 border">{item ? item.vilage : ""}</td>
+                        <td className="text-center py-5 border">
+                          {currentLabel}
+                        </td>
+                        <td className="p-2 border">
+                          {item ? item.vilage : ""}
+                        </td>
                         <td className="p-2 border">{item ? item.name : ""}</td>
-                        <td className="p-2 border">{item ? item.mobile : ""}</td>
+                        <td className="p-2 border">
+                          {item ? item.mobile : ""}
+                        </td>
                         <td className="relative border">
                           <button
                             className="ml-4 hover:text-blue-900"
@@ -539,7 +553,10 @@ const Homepage = () => {
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
                                     onClick={() =>
-                                      showQuestionsss(item?.mobile, item?.vilage)
+                                      showQuestionsss(
+                                        item?.mobile,
+                                        item?.vilage
+                                      )
                                     }
                                   >
                                     Send
@@ -574,7 +591,6 @@ const Homepage = () => {
       </div>
     </div>
   );
-
 };
 
 export default Homepage;

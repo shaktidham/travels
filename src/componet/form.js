@@ -106,7 +106,7 @@ function Form() {
             htmlFor="name"
             className="text-left text-gray-700 font-bold block"
           >
-            Name:
+            પેસેન્જર નામ:
           </label>
           <input
             type="text"
@@ -123,7 +123,7 @@ function Form() {
             htmlFor="vilage"
             className="text-left text-gray-700 font-bold block mt-4"
           >
-            Village:
+            ગામ:
           </label>
           <input
             type="text"
@@ -140,7 +140,7 @@ function Form() {
             htmlFor="mobile"
             className="text-left text-gray-700 font-bold block mt-4"
           >
-            Mobile No:
+            ફોન નંબર:
           </label>
           <input
             type="number"
@@ -156,7 +156,7 @@ function Form() {
             htmlFor="seatNumber"
             className="text-left text-gray-700 font-bold block mt-4"
           >
-            Seat Number:
+            સીટ નંબર:
           </label>
           <input
             type="text"
@@ -173,7 +173,7 @@ function Form() {
             htmlFor="date"
             className="text-left text-gray-700 font-bold block mt-4"
           >
-            Date:
+            તારીખ:
           </label>
           <input
             type="text"
