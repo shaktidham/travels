@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setMsgdata } from "../Slice/redux";
@@ -10,17 +10,83 @@ function Msgbox({
   showQuestionsss,
   data,
   setData,
+  totalsit,
+  msgmdata,
+  busdetails,
+  setAllsitprice,
+  setAllbooksit,
+
 }) {
   const dispatch = useDispatch();
+  const [price, setPrice] = useState();
+  const [cabinprice, setCabinprice] = useState();
+  const [sit, setSit] = useState();
+  const [cabin, setCabin] = useState();
+  const convertTo12HourFormat = (time24) => {
+    const [hours, minutes] = time24.split(":").map(Number);
+    let period = "AM";
+    let hours12 = hours;
+
+    if (hours >= 12) {
+      period = "PM";
+      if (hours > 12) {
+        hours12 = hours - 12;
+      }
+    } else if (hours === 0) {
+      hours12 = 12;
+    }
+
+    return `${hours12}:${minutes.toString().padStart(2, "0")} ${period}`;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
+    if (name === "time") {
+      // Convert time to 12-hour format before updating state
+      const convertedTime = convertTo12HourFormat(value);
+      setData((prevData) => ({
+        ...prevData,
+        [name]: convertedTime,
+      }));
+    } else {
+      setData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+  console.log(totalsit.data,"sfsfs");
+  console.log(msgmdata,"msgmdata");
+  useEffect(() => {
+
+    if (totalsit?.data) {
+     
+      totalsit.data.forEach((item) => {
+        if (msgmdata.vilage === item.village && msgmdata.name === item.name) {
+          console.log(item.seatNumbersArray);
+          const uniqueSeats = Array.from(
+            new Set(item.seatNumbersArray?.join("/").split("/"))
+          );
+          setAllbooksit(uniqueSeats.join("/"));
+          setSit(item.seatCount);
+          setCabin(item?.cabinCount);
+          console.log(uniqueSeats,"uniqueSeats");
+        }
+      });
+    }
+    setPrice(0);
+    if (busdetails?.data) {
+      busdetails.data.forEach((item) => {
+        setPrice(item.price);
+        setCabinprice(item.kabinprice ? item.kabinprice : 0);
+      });
+    }
+  }, [msgmdata, totalsit, busdetails]);
+
+
+  setAllsitprice(sit * price + cabin * cabinprice);
+console.log(data,"data");
   return (
     <div>
       {msgbox && (

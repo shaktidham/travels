@@ -25,15 +25,26 @@ const Homepage = () => {
   const [isloading, setIsloading] = useState(false); // Updated default state
   const [isDateSelected, setIsDateSelected] = useState(false); // New state for date selection
   const buttonRefs = useRef([]);
-  const [msgmdata, setMsgmdata] = useState([]);
+  const [allbooksits, setAllbooksit] = useState("");
   const [busdetails, setBusDetails] = useState([]);
+  const [msgmdata, setMsgmdata] = useState([]);
+  const [allsitprice, setAllsitprice] = useState();
   const dispatch = useDispatch();
   const [data, setData] = useState({
-    pickup: "",
-    price: "",
+    pickup: msgmdata.vilage,
     time: "",
-    sitnumber: "",
+    sitnumber: allbooksits,
+    price: allsitprice,
   });
+  useEffect(() => {
+    setData((prevData) => ({
+      ...prevData,
+      sitnumber: allbooksits,
+      price: allsitprice,
+      pickup: msgmdata.vilage,
+    }));
+  }, [allsitprice, allbooksits]);
+  const [totalsit, setTotalsit] = useState([]);
   const Route = localStorage.getItem("route");
   const routeId = localStorage.getItem("routeId");
   const navigate = useNavigate();
@@ -42,6 +53,7 @@ const Homepage = () => {
   const deleteapi = "https://shaktidham-backend.vercel.app/seats/delete/";
   const searchapi = "https://shaktidham-backend.vercel.app/seats/search";
   const busnumbersearchapi = "https://shaktidham-backend.vercel.app/bus/search";
+  const allsit = "https://shaktidham-backend.vercel.app/seats/searchbyallseat";
 
   const handleClickOutside = useCallback((event) => {
     if (
@@ -86,7 +98,6 @@ const Homepage = () => {
       return `કેબિન-${kabinIndex}`;
     }
   };
-
   const handleEditClick = useCallback(
     (id) => {
       const itemToEdit = sortdata?.data?.find((item) => item._id === id);
@@ -126,14 +137,17 @@ const Homepage = () => {
         const busnumber = await fetch(
           `${busnumbersearchapi}?Date=${formattedDate}&route=${Route}`
         );
-        if (!response.ok && !busnumber.ok) {
+        const allsits = await fetch(`${allsit}?Date=${formattedDate}&route=${Route}`);
+        if (!response.ok && !busnumber.ok && !allsits.ok) {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
         const busdetailas = await busnumber.json();
-        console.log(busdetailas, "busdetailsaaa");
+    
         setSortdata(result);
-        setBusDetails(busdetails);
+        setBusDetails(busdetailas);
+        const allsitdata = await allsits.json();
+      setTotalsit(allsitdata);
       } catch (error) {
         console.error("Fetch operation error:", error);
       } finally {
@@ -188,6 +202,13 @@ const Homepage = () => {
       ["કેબિન-4"],
       ["કેબિન-5"],
     ];
+    const kabin2 = [
+      ["કેબિન-6"],
+      ["કેબિન-7"],
+      ["કેબિન-8"],
+      ["કેબિન-9"],
+      ["કેબિન-10"],
+    ];
 
     // Function to generate table rows from labels or numbers
     const generateTableRows = (dataList) => {
@@ -238,17 +259,30 @@ const Homepage = () => {
           });
 
           return `
-            <tr>
+            <tr class="border border-black">
               ${pair
                 .map((seatNumber, index) => {
                   const item = items[index];
                   return item
                     ? `
-                      <td class="border border-black p-2 text-center w-1/6 ">${item.seatNumber}</td>
-                      <td class="border border-black p-2 text-left font-bold ">${item.vilage}--${item.name}  </td>`
+                
+                    <div>
+                      <td class="border border-black p-2 text-center w-1/6 ">${
+                        item.seatNumber
+                      }</td>
+                      <td class="border border-black p-2 text-left font-bold ">${
+                        item.vilage
+                      }--${item.name} </td>
+                      <td class="border border-black p-2 text-left font-bold ">${
+                        item?.mobile || ""
+                      }</td>
+                    </div>
+                    `
                     : `
                       <td class="border border-black p-2 text-center w-1/6 ">${seatNumber}</td>
-                      <td class="border border-black p-2 text-center "></td>`;
+                      <td class="border border-black p-2 text-center "></td>
+                      </div>
+                      `;
                 })
                 .join("")}
             </tr>
@@ -257,10 +291,12 @@ const Homepage = () => {
         .join("");
     };
 
+
     // Generate table rows for both tables
     const firstTableRows = generateTableRows(labels);
     const secondTableRows = generateTableRows(number);
     const thiredTableRows = generatesTableRows(kabin);
+    const fourthTableRows = generatesTableRows(kabin2);
 
     // Create the HTML content for the PDF
     const element = document.createElement("div");
@@ -318,12 +354,18 @@ const Homepage = () => {
               </table>
             </div>
           </div>
+          <div class="flex justify-between">
           <table class="border-collapse border border-black w-full">
             <tbody>
-            
               ${thiredTableRows}
             </tbody>
           </table>
+           <table class="border-collapse border border-black w-full">
+            <tbody>
+              ${fourthTableRows}
+            </tbody>
+          </table>
+          </div>
         </div>
       </body>
       </html>
@@ -394,14 +436,16 @@ const Homepage = () => {
   const showQuestion = useCallback(() => {
     setPopbox(!popbox);
   });
-  const showQuestionsss = useCallback((mobile, vilage) => {
+  const showQuestionsss = useCallback((mobile, vilage,name) => {
     setMsgbox(!msgbox);
     setMsgmdata({
       vilage: vilage,
       mobile: mobile,
+      name: name,
     });
+    setDisplay(false);
   });
-  console.log(msgmdata, "msgmdata");
+
   return (
     <div>
       <div
@@ -475,6 +519,7 @@ const Homepage = () => {
               >
                 Download
               </button>
+              <h1 className="text-red-600 font-bold text-xl">{Route} લાઇન</h1>
               <button
                 className="bg-[#8A6FDF] text-white px-4 py-2 rounded hover:bg-[#7451f2] mt-2"
                 onClick={showQuestion}
@@ -495,7 +540,7 @@ const Homepage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...Array(30).keys()].map((i) => {
+                  {[...Array(34).keys()].map((i) => {
                     const currentLabel = getLabel(i).toString();
                     const item = sortdata.data?.find(
                       (item) => item.seatNumber === currentLabel
@@ -555,7 +600,8 @@ const Homepage = () => {
                                     onClick={() =>
                                       showQuestionsss(
                                         item?.mobile,
-                                        item?.vilage
+                                        item?.vilage,
+                                        item?.name,
                                       )
                                     }
                                   >
@@ -587,6 +633,13 @@ const Homepage = () => {
           handleSendWhatsApp={handleSendWhatsApp}
           data={data}
           setData={setData}
+          totalsit={totalsit}
+          msgmdata={msgmdata}
+          busdetails={busdetails}
+          setAllbooksit={setAllbooksit}
+         allbooksits={allbooksits}
+          setAllsitprice={setAllsitprice}
+
         />
       </div>
     </div>

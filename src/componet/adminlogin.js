@@ -12,6 +12,7 @@ const Adminlogin = () => {
   const [inputlogindata, setInputlogindata] = useState(initialdata);
   const [showerror, setShowerror] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +23,7 @@ const Adminlogin = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await fetch(
@@ -50,6 +52,9 @@ const Adminlogin = () => {
     } catch (error) {
       setShowerror(true);
       console.log("catch");
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -106,10 +111,14 @@ const Adminlogin = () => {
           />
 
           <div className="flex justify-center mt-6">
-            <button
+          <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-800 transition duration-300 w-full"
+              className={`bg-blue-500 text-white font-bold py-2 px-4 rounded w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
             >
+            
               Submit
             </button>
           </div>

@@ -7,6 +7,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
   const inputs = useSelector((state) => state.inputs);
   const location = useLocation();
   const routeId = localStorage.getItem("routeId");
+  const [loading, setLoading] = useState(false);
 
   const formatDateForDisplay = (date) => {
     if (!date) return "";
@@ -29,6 +30,8 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
     location: "",
     price: "",
     driver: "",
+    bustime:"",
+    kabinprice:"",
     date: date,
     route: routeId,
   });
@@ -44,8 +47,9 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
       route: routeId,
     }));
   };
-
+  
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const formattedData = {
       ...data,
@@ -54,6 +58,8 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
 
     try {
       const hasId = busdetails?.data[0]?._id;
+    
+     
 
       const endpoint = hasId
         ? `https://shaktidham-backend.vercel.app/bus/update/${busdetails?.data[0]._id}`
@@ -76,6 +82,8 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
           location: "",
           price: "",
           driver: "",
+          bustime:"",
+          kabinprice:"",
           date: date,
           route: routeId,
         }); // Log API response
@@ -89,6 +97,8 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
     } catch (error) {
       console.error("Fetch operation error:", error);
       setError("An error occurred. Please try again.");
+    }  finally {
+      setLoading(false);
     }
   };
 
@@ -146,6 +156,22 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
                 required
               />
+                     <label
+                htmlFor="kabinprice"
+                className="text-left text-gray-700 font-bold block mt-4"
+              >
+                કેબિન Price:
+              </label>
+              <input
+                type="number"
+                id="kabinprice"
+                name="kabinprice"
+                onChange={handleChange}
+                value={data.kabinprice}
+                placeholder="Enter Price"
+                className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                
+              />
               <label
                 htmlFor="location"
                 className="text-left text-gray-700 font-bold block mt-4"
@@ -178,6 +204,22 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
                 required
               />
+                <label
+                htmlFor="bustime"
+                className="text-left text-gray-700 font-bold block mt-4"
+              >
+                બસ ઉપાડવાનો સમય:
+              </label>
+              <input
+                type="text"
+                id="bustime"
+                name="bustime"
+                onChange={handleChange}
+                value={data.bustime}
+                placeholder="Enter bustime"
+                className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                required
+              />
               <label
                 htmlFor="date"
                 className="text-left text-gray-700 font-bold block mt-4"
@@ -195,11 +237,14 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 // required
               />
               <div className="flex space-x-2 mt-3">
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
-                >
-                  {/* {busdetails?.data[0]?._id ? "Update" : "Submit"} */}ssd
+              <button
+              type="submit"
+              className={`bg-blue-500 text-white font-bold py-2 px-4 rounded w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
+            >
+                   {busdetails?.data[0]?._id ? "Update" : "Submit"} 
                 </button>
               </div>
               {error && <div className="text-red-500 mt-2">{error}</div>}

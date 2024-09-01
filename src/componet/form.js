@@ -7,6 +7,7 @@ function Form() {
   const location = useLocation();
   const navigate = useNavigate();
   const routeId = localStorage.getItem("routeId");
+  const [loading, setLoading] = useState(false);
 
   // Get the item to edit from location state
   const itemToEdit = location.state?.itemToEdit || null;
@@ -63,6 +64,7 @@ function Form() {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const formattedData = {
       ...data,
@@ -91,6 +93,9 @@ function Form() {
       }
     } catch (error) {
       console.error("Fetch operation error:", error);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -187,13 +192,16 @@ function Form() {
           />
 
           <div className="flex space-x-2 mt-3">
-            <button
+          <button
               type="submit"
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
+              className={`bg-blue-500 text-white font-bold py-2 px-4 rounded w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
             >
-              {itemToEdit ? "Update" : "Submit"}
+              {loading ? "Submitting..." : itemToEdit ? "Update" : "Submit"}
             </button>
-            <Link to={"/"}>
+            <Link to={"/home"}>
               <button
                 type="button"
                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
