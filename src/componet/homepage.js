@@ -367,6 +367,57 @@ const Homepage = () => {
           </table>
           </div>
         </div>
+        <div class="p-4">
+        <div class="flex justify-between mb-5">
+         <div class="text-3xl text-red-500 font-extrabold flex items-center mb-5">શક્તિધામ ટ્રાવેલ્સ</div>
+         <div>
+         <ul class="list-none text-black font-bold">
+         <li >તારીખ :- ${formattedDate}</li>
+          <li>ડ્રાઇવર :- ${busdetails?.data[0]?.driver}</li>
+           <li>બસ નંબર :- ${busdetails?.data[0]?.busNumber}</li>
+            <li>ઉપડવાનો સમય :- ${busdetails?.data[0]?.bustime}</li>
+         </ui>
+         </div>
+        </div>
+          <table class="border-2 border-red-500 w-full text-sm">
+            <thead>
+              <tr>
+                <th class="border-2 border-red-500 bg-red-400 p-2 text-center text-white">નંબર</th>
+                <th class="border-2 border-red-500 bg-red-400 p-2 text-center text-white">રૂપિયા</th>
+                <th class="border-2 border-red-500 bg-red-400 p-2 text-center text-white" >નામ</th>
+                <th class="border-2 border-red-500 bg-red-400 p-2 text-center text-white">કુલ સીટ</th>
+              </tr>
+            </thead>
+            <tbody>
+            ${Array.from({ length: 25 }, (_, index) => {
+              const item = totalsit?.data[index];
+              return `
+                <tr class="h-6">
+                  <td class="border-2 border-red-500 p-2 w-fit text-center font-bold">${
+                    index + 1
+                  }</td>
+                  <td class="border-2 border-red-500 p-2 w-1/4 font-bold"></td>
+<td class="border-2 border-red-500 p-2 font-bold">
+<div class=" flex justify-between">
+  <span>${item?.village ? item.village : ""}</span>
+  <span>${item?.name ? item.name : ""}</span></div>
+</td>
+
+
+
+                  <td class="border-2 border-red-500 p-2 text-center font-bold">
+                    ${item?.seatCount ? item.seatCount : ""}  ${
+                item?.seatCount && item?.cabinCount ? "+" : ""
+              } ${item?.cabinCount ? +item.cabinCount + "k" : ""}
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+           
+             
+            </tbody>
+          </table>
+        </div>
       </body>
       </html>
     `;
