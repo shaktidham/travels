@@ -621,7 +621,7 @@ const Homepage = () => {
                           {display && tooltipId === currentLabel && (
                             <div
                               role="tooltip"
-                              className="absolute shadow-lg bg-blue-400 z-10 border rounded p-2"
+                              className="absolute shadow-lg bg-blue-400 z-10 border rounded p-2 w-fit"
                               style={{
                                 top: "100%",
                                 left: "50%",
@@ -635,19 +635,19 @@ const Homepage = () => {
                               <div className="flex flex-col">
                                 <ul className="space-y-2">
                                   <li
-                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
+                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() => handleEditClick(item?._id)}
                                   >
                                     {item?.vilage ? "સુધારો કરો" : "સોફો બુક કરો"}
                                   </li>
                                   <li
-                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
+                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() => handleDelete(item?._id)}
                                   >
                                     સોફો કેન્સલ કરો
                                   </li>
                                   <li
-                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
+                                    className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() =>
                                       showQuestionsss(
                                         item?.mobile,
