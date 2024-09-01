@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -8,9 +8,79 @@ function Form() {
   const navigate = useNavigate();
   const routeId = localStorage.getItem("routeId");
   const [loading, setLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
 
   // Get the item to edit from location state
   const itemToEdit = location.state?.itemToEdit || null;
+  const villageNames = [
+    "અરજણસુખ",
+    "ખાખરીય",
+    "સૂર્યપ્રતાપગઢ",
+    "અનીડા",
+    "ઉજળા",
+    "મોટાઉજળા",
+    "મોટીકુકાવાવ",
+    "નાનીકુકાવાવ",
+    "જંગર",
+    "કોલડા",
+    "લુણીધાર",
+    "જીથુડી",
+    "રાંઢીયા",
+    "ચિતલ",
+    "ભીલડી",
+    "ભીલા",
+    "ઇંગોરાળા",
+    "ઇંગોરાળાપાટીયુ",
+    "લુણકી", 
+    "તાલાળિ",
+    "સનાળિ",
+    "રાણસીકી",
+    "દેરડી",
+    "પાટખીલોરી",
+    "રાવણા",
+    "વાસાવડ",
+    "દડવા",
+    "ઝુંડાળા",
+    "રાણપર",
+    "ફુલજર",
+    "ખીજડીયા",
+    "દેવળીયા",
+    "ધરાઇ",
+    "વાવડી",
+    "ત્રંબોડા",
+    "ગમાપીપળીયા",
+    "ચમારડી",
+    "બાબરા",
+    "ચરખા",
+    "ઉટવડ",
+    "નડાળા",
+    "થોરખાણ",
+    "ગરણી",
+    "પાનસડા",
+    "કર્ણુકી",
+    "કોટડાપીઠા",
+    "જંગવડ",
+    "મોટીખીલોરી",
+    "મેતાખંભાળિયા",
+    "કેશવાળાપાટીયુ",
+    "કમઢીયા",
+    "બિલડી",
+    "ડોડીયાળા",
+    "સાણથલી",
+    "નવાગામ",
+    "જુનાપીપળીયા",
+    "જીવાપર",
+    "પાંચવડા",
+    "પાંચવડાચોકડી",
+    "આટકોટ",
+    "જસદણ",
+    "સૂર્યાપંપ",
+    "લીલાપુર",
+    "લાલાવદર",
+    "વિછીયા",
+    "રાણપુર",
+  ];
 
   const formatDateForDisplay = (date) => {
     if (!date) return "";
@@ -61,7 +131,21 @@ function Form() {
       ...prevData,
       [name]: value,
     }));
-  };
+
+    if (name === "vilage") {
+      const firstLetter = value[0]?.toLowerCase();
+      if (firstLetter) {
+        const filteredSuggestions = villageNames.filter((name) =>
+          name.toLowerCase().startsWith(firstLetter)
+        );
+        setSuggestions(filteredSuggestions);
+        setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }
+  }; 
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -98,7 +182,22 @@ function Form() {
       setLoading(false);
     }
   };
-
+  const handleSelect = (suggestion) => {
+    setData((prevData) => ({
+      ...prevData,
+      vilage: suggestion,
+    }));
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+  const handleClick = useCallback((event) => {
+    // Set suggestions to an empty array on mouse click
+    setSuggestions([]);
+  }, []);
+  // Fetch suggestions from Geoapify API
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+  }, [handleClick]);
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="main bg-gray-100 rounded-lg shadow-md p-10 w-96">
@@ -130,16 +229,31 @@ function Form() {
           >
             ગામ:
           </label>
-          <input
-            type="text"
-            id="vilage"
-            name="vilage"
-            onChange={handleChange}
-            value={data.vilage}
-            placeholder="Enter your Village"
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
-            required
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="vilage"
+              name="vilage"
+              onChange={handleChange}
+              value={data.vilage}
+              placeholder="Enter your Village"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+              required
+            />
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className="absolute z-10 bg-gray-200 border-2 border-gray-500  font-bold border border-gray-300 rounded-md w-full mt-1 max-h-40 overflow-y-auto">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSelect(suggestion)}
+                    className="px-3 py-2 cursor-pointer hover:bg-gray-100 border-b-2 border-gray-500 "
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           <label
             htmlFor="mobile"
