@@ -638,13 +638,13 @@ const Homepage = () => {
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
                                     onClick={() => handleEditClick(item?._id)}
                                   >
-                                    {item?.vilage ? "Edit" : "Add"}
+                                    {item?.vilage ? "સુધારો કરો" : "સોફો બુક કરો"}
                                   </li>
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
                                     onClick={() => handleDelete(item?._id)}
                                   >
-                                    Delete
+                                    સોફો કેન્સલ કરો
                                   </li>
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold"
@@ -656,7 +656,7 @@ const Homepage = () => {
                                       )
                                     }
                                   >
-                                    Send
+                                    મેસેજ મોકલો
                                   </li>
                                 </ul>
                               </div>

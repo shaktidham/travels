@@ -313,14 +313,14 @@ function Form() {
               }`}
               disabled={loading}
             >
-              {loading ? "Submitting..." : itemToEdit ? "Update" : "Submit"}
+              {loading ? "Submitting..." : itemToEdit ? "બુક કરો" : "બુક કરો"}
             </button>
             <Link to={"/home"}>
               <button
                 type="button"
                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
               >
-                Back
+                પાછા જાઓ
               </button>
             </Link>
           </div>
