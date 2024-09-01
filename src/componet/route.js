@@ -24,7 +24,7 @@ useEffect(()=>{
 
 )
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-6 h-screen">
+    <div className="flex flex-col lg:flex-row items-center justify-between  h-screen">
     <div className="w-full lg:w-1/3 mb-6 lg:mb-0 flex-shrink-0">
       <img src={Bus} alt="Bus" className="w-full h-auto" />
     </div>
