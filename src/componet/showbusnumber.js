@@ -156,7 +156,7 @@ function Showbusnumber({ showQuestion, popbox, busdetails, handleDateChange }) {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
                 required
               />
-                     <label
+              <label
                 htmlFor="kabinprice"
                 className="text-left text-gray-700 font-bold block mt-4"
               >
