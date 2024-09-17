@@ -6,6 +6,7 @@ import Adminlogin from "./componet/adminlogin";
 import { jwtDecode } from "jwt-decode";
 import PrivateRoute from "./PrivateRoute";
 import RoutePage from "./componet/route";
+import Rootadd from "./componet/rootadd";
 
 function App() {
   const token = localStorage.getItem("authToken");
@@ -41,6 +42,16 @@ function App() {
             element={
               <PrivateRoute>
                 <RoutePage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="/rootadd"
+            element={
+              <PrivateRoute>
+                <Rootadd />
               </PrivateRoute>
             }
           />

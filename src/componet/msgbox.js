@@ -15,7 +15,6 @@ function Msgbox({
   busdetails,
   setAllsitprice,
   setAllbooksit,
-
 }) {
   const dispatch = useDispatch();
   const [price, setPrice] = useState();
@@ -56,22 +55,17 @@ function Msgbox({
       }));
     }
   };
-  console.log(totalsit.data,"sfsfs");
-  console.log(msgmdata,"msgmdata");
-  useEffect(() => {
 
+  useEffect(() => {
     if (totalsit?.data) {
-     
       totalsit.data.forEach((item) => {
         if (msgmdata.vilage === item.village && msgmdata.name === item.name) {
-          console.log(item.seatNumbersArray);
           const uniqueSeats = Array.from(
             new Set(item.seatNumbersArray?.join("/").split("/"))
           );
           setAllbooksit(uniqueSeats.join("/"));
           setSit(item.seatCount);
           setCabin(item?.cabinCount);
-          console.log(uniqueSeats,"uniqueSeats");
         }
       });
     }
@@ -84,9 +78,6 @@ function Msgbox({
     }
   }, [msgmdata, totalsit, busdetails]);
 
-
-  setAllsitprice(sit * price + cabin * cabinprice);
-console.log(data,"data");
   return (
     <div>
       {msgbox && (

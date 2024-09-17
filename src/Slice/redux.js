@@ -6,6 +6,8 @@ const initialState = {
     date: null,
     openpop: false,
     msgdata: [],
+    rootid: null,
+    rootname: null,
   },
 };
 const InputSlice = createSlice({
@@ -24,12 +26,24 @@ const InputSlice = createSlice({
     setMsgdata: (state, action) => {
       state.Tablemanuplation.msgdata = action.payload;
     },
+    setRootName: (state, action) => {
+      state.Tablemanuplation.rootname = action.payload;
+    },
+    setRootId: (state, action) => {
+      state.Tablemanuplation.rootid = action.payload;
+    },
   },
 });
 
 // Export actions
-export const { setSeatNumber, setDate, setPopbox, setMsgdata } =
-  InputSlice.actions;
+export const {
+  setSeatNumber,
+  setDate,
+  setPopbox,
+  setMsgdata,
+  setRootId,
+  setRootName,
+} = InputSlice.actions;
 
 // Export reducer
 export default InputSlice.reducer;
