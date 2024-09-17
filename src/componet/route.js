@@ -77,11 +77,13 @@ import { ReactComponent as Vector } from "./../svg/Vector.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setDate, setRootId, setRootName } from "../Slice/redux";
+import { Button } from "@mui/material";
 
 function Route() {
   const [formData, setFormData] = useState({
-    village: "",
+    from: "",
     date: "",
+    to: "",
   });
   const [data, setData] = useState();
   const dispatch = useDispatch();
@@ -96,6 +98,19 @@ function Route() {
       [name]: value,
     }));
   };
+  const formatDateForSet = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0];
+  };
+
+  const handleRoute = (route, id, date) => {
+    localStorage.setItem("route", route);
+    localStorage.setItem("routeId", id);
+    const formattedDate = formatDateForSet(date);
+    console.log(formattedDate);
+
+    navigate("/home");
+  };
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -103,7 +118,7 @@ function Route() {
       // dispatch(setDate(formData?.date));
       try {
         const response = await fetch(
-          `${api}?Date=${formData.date}&village=${formData.village}`
+          `${api}?Date=${formData.date}&from=${formData.from}&to=${formData.to}`
         );
 
         if (!response.ok) {
@@ -119,6 +134,7 @@ function Route() {
     },
     [api, formData, navigate] // Include formData as dependency to ensure it's up-to-date
   );
+
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between h-screen bg-gray-50">
       <div className="w-full lg:w-1/3 mb-6 lg:mb-0 flex-shrink-0">
@@ -141,16 +157,33 @@ function Route() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label
-                  htmlFor="village"
+                  htmlFor="from"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Destination City
+                  from
                 </label>
                 <input
                   type="text"
-                  id="village"
-                  name="village"
-                  value={formData.village}
+                  id="from"
+                  name="from"
+                  value={formData.from}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="village"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  To
+                </label>
+                <input
+                  type="text"
+                  id="to"
+                  name="to"
+                  value={formData.to}
                   onChange={handleChange}
                   required
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
@@ -182,6 +215,8 @@ function Route() {
               </button>
             </form>
           </div>
+        ) : data.length < 1 ? (
+          <div>BUS NOT FOUND</div>
         ) : (
           <div className="overflow-x-auto">
             {data.map((item, index) => (
@@ -222,6 +257,20 @@ function Route() {
                         ${item.price || "600"}
                       </td>
                     </tr>
+                    <tr>
+                      {" "}
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <Button
+                          className="bg-red-800"
+                          onClick={() =>
+                            handleRoute(item.route, item._id, item.date)
+                          }
+                        >
+                          View Sit
+                        </Button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -229,7 +278,6 @@ function Route() {
           </div>
         )}
       </div>
-
       <div className="w-full lg:w-1/3 mt-6 lg:mt-0 flex-shrink-0">
         <Vector />
       </div>

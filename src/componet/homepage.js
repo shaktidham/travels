@@ -137,17 +137,19 @@ const Homepage = () => {
         const busnumber = await fetch(
           `${busnumbersearchapi}?Date=${formattedDate}&route=${Route}`
         );
-        const allsits = await fetch(`${allsit}?Date=${formattedDate}&route=${Route}`);
+        const allsits = await fetch(
+          `${allsit}?Date=${formattedDate}&route=${Route}`
+        );
         if (!response.ok && !busnumber.ok && !allsits.ok) {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
         const busdetailas = await busnumber.json();
-    
+
         setSortdata(result);
         setBusDetails(busdetailas);
         const allsitdata = await allsits.json();
-      setTotalsit(allsitdata);
+        setTotalsit(allsitdata);
       } catch (error) {
         console.error("Fetch operation error:", error);
       } finally {
@@ -156,7 +158,15 @@ const Homepage = () => {
     },
     [dispatch]
   );
+  const hasRun = useRef(false);
 
+  useEffect(() => {
+    // Check if the effect has not run before
+    if (inputs.Tablemanuplation.date && !hasRun.current) {
+      handleDateChange(inputs.Tablemanuplation.date);
+      hasRun.current = true; // Mark that the effect has run
+    }
+  }, [inputs.Tablemanuplation.date, handleDateChange]);
   const handleDelete = useCallback(
     async (id) => {
       try {
@@ -291,7 +301,6 @@ const Homepage = () => {
         .join("");
     };
 
-
     // Generate table rows for both tables
     const firstTableRows = generateTableRows(labels);
     const secondTableRows = generateTableRows(number);
@@ -319,8 +328,12 @@ const Homepage = () => {
       <th class="text-right pr-2">ડ્રાઇવર:-${busdetails?.data[0]?.driver}</th>
     </tr>
     <tr class="flex justify-between">
-      <th class="text-right pr-2">ઉપડવાનો સમય:-${busdetails?.data[0]?.bustime}</th>
-      <th class="text-right pr-2">બસ નંબર:-${busdetails?.data[0]?.busNumber}</th>
+      <th class="text-right pr-2">ઉપડવાનો સમય:-${
+        busdetails?.data[0]?.bustime
+      }</th>
+      <th class="text-right pr-2">બસ નંબર:-${
+        busdetails?.data[0]?.busNumber
+      }</th>
     </tr>
   </thead>
 </table>
@@ -487,7 +500,7 @@ const Homepage = () => {
   const showQuestion = useCallback(() => {
     setPopbox(!popbox);
   });
-  const showQuestionsss = useCallback((mobile, vilage,name) => {
+  const showQuestionsss = useCallback((mobile, vilage, name) => {
     setMsgbox(!msgbox);
     setMsgmdata({
       vilage: vilage,
@@ -526,6 +539,7 @@ const Homepage = () => {
             >
               <DatePicker
                 value={inputs.Tablemanuplation.date}
+                disabled
                 onChange={(date) => handleDateChange(date)}
                 renderInput={(params) => (
                   <TextField
@@ -638,7 +652,9 @@ const Homepage = () => {
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() => handleEditClick(item?._id)}
                                   >
-                                    {item?.vilage ? "સુધારો કરો" : "સોફો બુક કરો"}
+                                    {item?.vilage
+                                      ? "સુધારો કરો"
+                                      : "સોફો બુક કરો"}
                                   </li>
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
@@ -652,7 +668,7 @@ const Homepage = () => {
                                       showQuestionsss(
                                         item?.mobile,
                                         item?.vilage,
-                                        item?.name,
+                                        item?.name
                                       )
                                     }
                                   >
@@ -688,9 +704,8 @@ const Homepage = () => {
           msgmdata={msgmdata}
           busdetails={busdetails}
           setAllbooksit={setAllbooksit}
-         allbooksits={allbooksits}
+          allbooksits={allbooksits}
           setAllsitprice={setAllsitprice}
-
         />
       </div>
     </div>
