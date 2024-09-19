@@ -539,7 +539,6 @@ const Homepage = () => {
             >
               <DatePicker
                 value={inputs.Tablemanuplation.date}
-                disabled
                 onChange={(date) => handleDateChange(date)}
                 renderInput={(params) => (
                   <TextField
@@ -652,15 +651,13 @@ const Homepage = () => {
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() => handleEditClick(item?._id)}
                                   >
-                                    {item?.vilage
-                                      ? "સુધારો કરો"
-                                      : "સોફો બુક કરો"}
+                                    {item?.vilage ? "Edit" : "Add"}
                                   </li>
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
                                     onClick={() => handleDelete(item?._id)}
                                   >
-                                    સોફો કેન્સલ કરો
+                                    Delete
                                   </li>
                                   <li
                                     className="cursor-pointer hover:bg-blue-300 p-1 rounded text-black font-bold border-2 border-white"
@@ -672,7 +669,7 @@ const Homepage = () => {
                                       )
                                     }
                                   >
-                                    મેસેજ મોકલો
+                                    send
                                   </li>
                                 </ul>
                               </div>
